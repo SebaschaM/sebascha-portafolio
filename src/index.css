@@ -54,7 +54,7 @@
     width: 0;
   }
   to {
-    width: 15ch;
+    width: 100%;
   }
 }
 
@@ -64,13 +64,36 @@
   }
 }
 
+.typewriter-container {
+  min-height: 3rem; /* Ajusta esto según la altura de la palabra más larga */
+}
+
 .typewriter h2 {
   overflow: hidden;
   border-right: 0.15em solid #fff;
   white-space: nowrap;
-  animation: typing 4s steps(30, end), blink 0.75s step-end infinite;
+  animation: blink 0.75s step-end infinite;
   display: inline-block;
-  max-width: 15ch;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Adding the animation to the Tailwind CSS classes */
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out;
 }
 
 ::-webkit-scrollbar {

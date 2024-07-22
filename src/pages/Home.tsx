@@ -7,16 +7,21 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { PublicLayout } from "../layout/PublicLayout";
-import { IoIosCodeWorking } from "react-icons/io";
+import { ExperienceCard } from "../components";
+import { DataProfileCard } from "../components/DataProfileCard";
+import { Typewriter } from "../components/Typewriter";
 
 const Home = () => {
+  const words = [
+    "Desarrollador Web",
+    "Practicante Cloud",
+    "Entusiasta de la Tecnología",
+  ];
+
   return (
     <PublicLayout>
-      <div className="relative flex flex-col items-center justify-center flex-1 w-[80%] mx-auto text-white">
-        <section
-          id="about"
-          className="relative z-10 w-full p-8 mb-8 rounded-lg shadow-lg bg-with-glow"
-        >
+      <div className="relative flex flex-col items-center justify-center flex-1 w-full lg:w-[80%] mx-auto text-white">
+        <DataProfileCard icon={<></>} title="">
           <div className="flex flex-col items-center justify-center w-full mb-12 space-y-6 md:flex-row md:space-y-0 md:space-x-6">
             <div className="flex-shrink-0 md:mr-6">
               <img
@@ -30,11 +35,7 @@ const Home = () => {
                 <h1 className="text-3xl font-bold text-title md:text-4xl">
                   Sebastián Chaquila Muñoz
                 </h1>
-                <div className="typewriter">
-                  <h2 className="text-xl text-gray-400 md:text-2xl">
-                    Desarrollador Web
-                  </h2>
-                </div>
+                <Typewriter words={words} />
               </div>
               <div className="flex flex-col items-center w-full space-y-2 md:space-y-0 md:flex-row md:space-x-4">
                 <a href="/ruta-al-cv.pdf" download className="w-full md:w-auto">
@@ -85,82 +86,48 @@ const Home = () => {
               mejorar la vida de las personas.
             </p>
           </div>
-        </section>
+        </DataProfileCard>
 
-        <div className="relative z-10 w-full p-6 mb-8 text-center text-gray-300 font-merriweather text-subtitle3">
+        <div className="relative z-10 w-full p-6 mb-8 text-center text-gray-300 font-merriweather text-subtitle3 animate-fade-in-up">
           "Aprendizaje constante, crecimiento duradero"
         </div>
 
-        <section
-          id="experience"
-          className="relative z-10 w-full p-8 mb-8 rounded-lg shadow-lg bg-with-glow"
-        >
-          <div className="flex items-center mb-5">
-            <FaSuitcaseRolling className="mr-2 text-xl" />
-            <h2 className="font-bold text-subtitle1">Experiencia</h2>
+        <DataProfileCard icon={<FaSuitcaseRolling />} title="Experiencias">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+            <ExperienceCard
+              company="Awcrast"
+              date="Julio 2023 - Octubre 2024"
+              tasks={[
+                "Diseño de interfaces coherentes con Figma",
+                "Desarrollo de aplicaciones móviles con React Native e Ionic",
+                "Optimización de rendimiento y gestión de código con Git y GitHub",
+                "Compatibilidad con las últimas versiones de React Native",
+                "Colaboración con equipos utilizando Postman",
+              ]}
+            />
+            <ExperienceCard
+              company="Devioz S.A.C."
+              date="Enero 2024 - Julio 2024"
+              tasks={[
+                "Diseño y desarrollo de interfaces de usuario interactivas",
+                "Creación de sitios web responsivos y eficientes con Node.js y Express.js",
+                "Gestión de bases de datos con PostgreSQL y SQL",
+                "Implementación y consumo de APIs RESTful",
+                "Mejora de la calidad del código JavaScript con TypeScript",
+              ]}
+            />
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <ol className="relative pl-6 border-l border-gray-200 dark:border-gray-700">
-              <li className="mb-10">
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <IoIosCodeWorking />
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Flowbite Figma v1.3.0
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  Released on December 7th, 2021
-                </time>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p>
-              </li>
-            </ol>
-            <ol className="relative pl-6 border-l border-gray-200 dark:border-gray-700">
-              <li>
-                <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                  <IoIosCodeWorking />
-                </span>
-                <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                  Flowbite Library v1.2.2
-                </h3>
-                <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  Released on December 2nd, 2021
-                </time>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get started with dozens of web components and interactive
-                  elements built on top of Tailwind CSS.
-                </p>
-              </li>
-            </ol>
-          </div>
-        </section>
+        </DataProfileCard>
 
-        <section
-          id="projects"
-          className="relative z-10 w-full p-8 mb-8 rounded-lg shadow-lg bg-with-glow"
-        >
-          <div className="flex items-center mb-4">
-            <FaFolder className="mr-2 text-xl" />
-            <h2 className="font-bold text-subtitle1">Proyectos</h2>
-          </div>
+        <DataProfileCard icon={<FaFolder />} title="Proyectos">
           <ul className="mt-4 space-y-2 text-gray-300 list-disc list-inside text-normal">
             <li>Proyecto 1: Descripción breve del proyecto 1.</li>
             <li>Proyecto 2: Descripción breve del proyecto 2.</li>
             <li>Proyecto 3: Descripción breve del proyecto 3.</li>
           </ul>
-        </section>
+        </DataProfileCard>
 
-        <section
-          id="technologies"
-          className="relative z-10 w-full p-8 mb-8 rounded-lg shadow-lg bg-with-glow"
-        >
-          <div className="flex items-center mb-4">
-            <FaGlobe className="mr-2 text-xl" />
-            <h2 className="font-bold text-subtitle1">Tecnologías</h2>
-          </div>{" "}
+        <DataProfileCard icon={<FaGlobe />} title="Tecnologías">
           <div className="flex flex-wrap items-start justify-start mt-4 space-y-4 text-gray-300 md:space-y-0 md:space-x-4 text-normal">
             <div className="p-4">
               <h3 className="font-semibold text-subtitle3">Frontend</h3>
@@ -175,7 +142,7 @@ const Home = () => {
               <p>MongoDB</p>
             </div>
           </div>
-        </section>
+        </DataProfileCard>
 
         <footer
           id="footer"
