@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const Carousel = () => {
   const images = [
     "https://concepto.de/wp-content/uploads/2021/07/caballos-e1626738224231.jpg",
@@ -6,6 +8,24 @@ export const Carousel = () => {
     "https://antipode-peru.com/info/le-caballo-de-paso-1.jpeg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdgU9cILYlnLbSJ7q18cnFOSUYJY-OjQHGovZGgVZ94fpH8_wheN5id6Bv2n8e5Bx_sDY&usqp=CAU",
   ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePrev = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setActiveIndex(index);
+  };
 
   return (
     <div
@@ -18,7 +38,7 @@ export const Carousel = () => {
           <div
             key={index}
             className={`absolute inset-0 flex items-center justify-center w-full h-full transition-opacity duration-300 ${
-              index === 0 ? "opacity-100" : "opacity-0"
+              index === activeIndex ? "opacity-100" : "opacity-0"
             }`}
           >
             <img className="object-cover w-full h-full" src={image} alt="" />
@@ -26,46 +46,23 @@ export const Carousel = () => {
         ))}
       </div>
       <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2 rtl:space-x-reverse">
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="true"
-          aria-label="Slide 1"
-          data-carousel-slide-to="0"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 2"
-          data-carousel-slide-to="1"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 3"
-          data-carousel-slide-to="2"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 4"
-          data-carousel-slide-to="3"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 5"
-          data-carousel-slide-to="4"
-        ></button>
+        {images.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={`w-3 h-3 rounded-full ${
+              index === activeIndex ? "bg-white" : "bg-gray-500"
+            }`}
+            aria-current={index === activeIndex}
+            aria-label={`Slide ${index + 1}`}
+            onClick={() => goToSlide(index)}
+          ></button>
+        ))}
       </div>
       <button
         type="button"
         className="absolute top-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer start-0 group focus:outline-none"
-        data-carousel-prev
+        onClick={handlePrev}
       >
         <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
           <svg
@@ -89,7 +86,7 @@ export const Carousel = () => {
       <button
         type="button"
         className="absolute top-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer end-0 group focus:outline-none"
-        data-carousel-next
+        onClick={handleNext}
       >
         <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
           <svg
