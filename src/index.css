@@ -91,7 +91,13 @@
   }
 }
 
-/* Adding the animation to the Tailwind CSS classes */
+[data-carousel-item] {
+  display: none;
+}
+[data-carousel-item].active {
+  display: block;
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 1s ease-out;
 }

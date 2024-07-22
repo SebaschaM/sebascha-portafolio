@@ -6,7 +6,7 @@ interface NavItemProps {
 
 export const NavItem = ({ href, icon, label }: NavItemProps) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (href !== "#") {
+    if (href.startsWith("#")) {
       e.preventDefault();
       const targetElement = document.querySelector(href);
       if (targetElement) {
