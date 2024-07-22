@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+  --color-contraste: #0d1117;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1),
+      0 0 10px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+      0 0 30px rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
+      0 0 10px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.animate-glow {
+  animation: glow 4s infinite alternate;
+}
+
+@keyframes blue-glow {
+  0% {
+    box-shadow: 0 0 10px 2px rgba(0, 119, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(0, 119, 255, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px 2px rgba(0, 119, 255, 0.5);
+  }
+}
+
+.bg-with-glow {
+  background-color: var(--color-contraste);
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 15ch;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typewriter h2 {
+  overflow: hidden;
+  border-right: 0.15em solid #fff;
+  white-space: nowrap;
+  animation: typing 4s steps(30, end), blink 0.75s step-end infinite;
+  display: inline-block;
+  max-width: 15ch;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4a4a4a;
+  border-radius: 10px;
+  border: 3px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6a6a6a;
+}
