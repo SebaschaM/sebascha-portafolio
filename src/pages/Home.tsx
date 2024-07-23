@@ -12,8 +12,19 @@ import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
 import { Carousel } from "../components/Carousel"; // Import the new Carousel component
 import { experiences } from "../seed/experiences";
+import { technologies } from "../seed/tecnologies";
+import { useState } from "react";
 
 const Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredTechnologies =
+    selectedCategory === "All"
+      ? technologies
+      : { [selectedCategory]: technologies[selectedCategory] };
+
+  const categories = ["All", ...Object.keys(technologies)];
+
   const words = [
     "Desarrollador Web",
     "Practicante Cloud",
@@ -129,19 +140,28 @@ const Home = () => {
           className="flex items-center justify-center w-full"
         >
           <DataProfileCard icon={<FaGlobe />} title="Tecnologías">
-            <div className="flex flex-wrap items-start justify-start mt-4 space-y-4 text-gray-300 md:space-y-0 md:space-x-4 text-normal">
-              <div className="p-4">
-                <h3 className="font-semibold text-subtitle3">Frontend</h3>
-                <p>JavaScript, React, Tailwind CSS</p>
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-subtitle3">Backend</h3>
-                <p>Node.js, Express</p>
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-subtitle3">Database</h3>
-                <p>MongoDB</p>
-              </div>
+            <div className="flex items-center justify-between mb-6">
+              <label className="text-white">Filtrar por categoría:</label>
+              <select
+                title="Filtrar por categoría"
+                className="p-2 text-white bg-gray-700 rounded-md"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="grid grid-cols-1 gap-6 mt-4 text-gray-300 md:grid-cols-2 lg:grid-cols-3 text-normal">
+              {Object.keys(filteredTechnologies).map((category) => (
+                <div key={category} className="space-y-2">
+                  <h3 className="font-semibold text-subtitle3">{category}</h3>
+                  <p>{filteredTechnologies[category].join(", ")}</p>
+                </div>
+              ))}
             </div>
           </DataProfileCard>
         </section>
