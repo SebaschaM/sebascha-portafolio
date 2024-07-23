@@ -1,25 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ProjectCard } from "./ProjectCard";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import { projects } from "../seed/projects";
 
 export const Carousel = () => {
-  const images = [
-    "https://concepto.de/wp-content/uploads/2021/07/caballos-e1626738224231.jpg",
-    "https://taxonomiaanimal.wordpress.com/wp-content/uploads/2018/03/caballeishon.jpg?w=640",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyzpSJgUHOjeymEs0gcvGl3RkwBW_jaZx5MQ&s",
-    "https://antipode-peru.com/info/le-caballo-de-paso-1.jpeg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdgU9cILYlnLbSJ7q18cnFOSUYJY-OjQHGovZGgVZ94fpH8_wheN5id6Bv2n8e5Bx_sDY&usqp=CAU",
-  ];
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handlePrev = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -27,30 +22,48 @@ export const Carousel = () => {
     setActiveIndex(index);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) =>
+        prevIndex === projects.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
       id="default-carousel"
       className="relative w-full"
       data-carousel="slide"
     >
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 flex items-center justify-center w-full h-full transition-opacity duration-300 ${
-              index === activeIndex ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img className="object-cover w-full h-full" src={image} alt="" />
-          </div>
-        ))}
+      <div className="relative h-full overflow-hidden rounded-lg">
+        <div
+          className="flex transition-transform duration-500"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center h-full min-w-full"
+            >
+              <ProjectCard
+                title={project.title}
+                description={project.description}
+                imageUrl={project.imageUrl}
+                link={project.link}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2 rtl:space-x-reverse">
-        {images.map((_, index) => (
+      <div className="absolute z-30 flex space-x-2 -translate-x-1/2 bottom-2 left-1/2 rtl:space-x-reverse">
+        {projects.map((_, index) => (
           <button
             key={index}
             type="button"
-            className={`w-3 h-3 rounded-full ${
+            className={`w-2 h-2 rounded-full ${
               index === activeIndex ? "bg-white" : "bg-gray-500"
             }`}
             aria-current={index === activeIndex}
@@ -61,49 +74,21 @@ export const Carousel = () => {
       </div>
       <button
         type="button"
-        className="absolute top-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer start-0 group focus:outline-none"
+        className="absolute top-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer start-0 group focus:outline-none"
         onClick={handlePrev}
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-          <svg
-            className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 1 1 5l4 4"
-            />
-          </svg>
+        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-2 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+          <FaCaretLeft className="text-xl text-white rtl:rotate-180" />
           <span className="sr-only">Previous</span>
         </span>
       </button>
       <button
         type="button"
-        className="absolute top-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer end-0 group focus:outline-none"
+        className="absolute top-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer end-0 group focus:outline-none"
         onClick={handleNext}
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-          <svg
-            className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 6 10"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 9 4-4-4-4"
-            />
-          </svg>
+        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-2 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+          <FaCaretRight className="text-xl text-white rtl:rotate-180" />
           <span className="sr-only">Next</span>
         </span>
       </button>

@@ -11,6 +11,7 @@ import { ExperienceCard } from "../components";
 import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
 import { Carousel } from "../components/Carousel"; // Import the new Carousel component
+import { experiences } from "../seed/experiences";
 
 const Home = () => {
   const words = [
@@ -101,28 +102,15 @@ const Home = () => {
         >
           <DataProfileCard icon={<FaSuitcaseRolling />} title="Experiencias">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-              <ExperienceCard
-                company="Devioz S.A.C."
-                date="Enero 2024 - Julio 2024"
-                tasks={[
-                  "Diseño y desarrollo de interfaces de usuario interactivas",
-                  "Creación de sitios web responsivos y eficientes con Node.js y Express.js",
-                  "Gestión de bases de datos con PostgreSQL y SQL",
-                  "Implementación y consumo de APIs RESTful",
-                  "Mejora de la calidad del código JavaScript con TypeScript",
-                ]}
-              />
-              <ExperienceCard
-                company="Awcrast"
-                date="Julio 2023 - Octubre 2023"
-                tasks={[
-                  "Diseño de interfaces coherentes con Figma",
-                  "Desarrollo de aplicaciones móviles con React Native e Ionic",
-                  "Optimización de rendimiento y gestión de código con Git y GitHub",
-                  "Compatibilidad con las últimas versiones de React Native",
-                  "Colaboración con equipos utilizando Postman",
-                ]}
-              />
+              {experiences.map((experience, index) => (
+                <ExperienceCard
+                  key={index}
+                  company={experience.company}
+                  date={experience.date}
+                  tasks={experience.tasks}
+                  techStack={experience.techStack}
+                />
+              ))}
             </div>
           </DataProfileCard>
         </section>
