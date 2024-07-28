@@ -6,8 +6,8 @@ interface ProjectCardProps {
   imageUrl: string;
   link: string;
   detailsLink: string;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export const ProjectCard = ({

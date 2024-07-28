@@ -7,18 +7,19 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { PublicLayout } from "../layout/PublicLayout";
-import { ExperienceCard } from "../components";
+import { ExperienceCard, ListProject } from "../components";
 import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
 import { Carousel } from "../components/Carousel"; // Import the new Carousel component
 import { experiences } from "../seed/experiences";
 import { technologies, technologyIcons } from "../seed/tecnologies";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type TechnologyCategory = keyof typeof technologies;
 
 const Home = () => {
   const categories = Object.keys(technologies) as TechnologyCategory[];
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [selectedCategory, setSelectedCategory] = useState<TechnologyCategory>(
     categories[0]
   );
@@ -30,6 +31,18 @@ const Home = () => {
     "Practicante Cloud",
     "Entusiasta de la Tecnología",
   ];
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <PublicLayout>
@@ -135,7 +148,7 @@ const Home = () => {
             title="Proyectos"
             viewAllLink="/projects"
           >
-            <Carousel />
+            {windowWidth > 800 ? <Carousel /> : <ListProject />}
           </DataProfileCard>
         </section>
 
