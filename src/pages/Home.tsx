@@ -12,18 +12,18 @@ import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
 import { Carousel } from "../components/Carousel"; // Import the new Carousel component
 import { experiences } from "../seed/experiences";
-import { technologies } from "../seed/tecnologies";
+import { technologies, technologyIcons } from "../seed/tecnologies";
 import { useState } from "react";
 
+type TechnologyCategory = keyof typeof technologies;
+
 const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = Object.keys(technologies) as TechnologyCategory[];
+  const [selectedCategory, setSelectedCategory] = useState<TechnologyCategory>(
+    categories[0]
+  );
 
-  const filteredTechnologies =
-    selectedCategory === "All"
-      ? technologies
-      : { [selectedCategory]: technologies[selectedCategory] };
-
-  const categories = ["All", ...Object.keys(technologies)];
+  const filteredTechnologies = technologies[selectedCategory];
 
   const words = [
     "Desarrollador Web",
@@ -137,16 +137,18 @@ const Home = () => {
 
         <section
           id="technologies"
-          className="flex items-center justify-center w-full"
+          className="flex flex-col items-center justify-center w-full"
         >
           <DataProfileCard icon={<FaGlobe />} title="Tecnologías">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between w-full mb-6">
               <label className="text-white">Filtrar por categoría:</label>
               <select
                 title="Filtrar por categoría"
                 className="p-2 text-white bg-gray-700 rounded-md"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) =>
+                  setSelectedCategory(e.target.value as TechnologyCategory)
+                }
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -156,10 +158,15 @@ const Home = () => {
               </select>
             </div>
             <div className="grid grid-cols-1 gap-6 mt-4 text-gray-300 md:grid-cols-2 lg:grid-cols-3 text-normal">
-              {Object.keys(filteredTechnologies).map((category) => (
-                <div key={category} className="space-y-2">
-                  <h3 className="font-semibold text-subtitle3">{category}</h3>
-                  <p>{filteredTechnologies[category].join(", ")}</p>
+              {filteredTechnologies.map((tech) => (
+                <div
+                  key={tech}
+                  className="p-4 transition duration-300 ease-in-out transform bg-gray-700 rounded-lg hover:bg-gray-600 hover:-translate-y-1 hover:scale-105"
+                >
+                  <div className="flex items-center px-2 py-1 space-x-2 text-white transition duration-300 ease-in-out">
+                    {technologyIcons[tech]}
+                    <span>{tech}</span>
+                  </div>
                 </div>
               ))}
             </div>
