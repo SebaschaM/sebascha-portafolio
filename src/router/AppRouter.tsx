@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ToastProvider from "../provider/ToastProvider";
-import { Home } from "../pages";
+import { Home, Projects } from "../pages";
 
 export const AppRouter = () => {
   return (
@@ -8,7 +8,7 @@ export const AppRouter = () => {
       <ToastProvider />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* QUIERO HACER UN REDIRECT */}
+        <Route path="/projects" element={<Projects />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

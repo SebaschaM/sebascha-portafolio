@@ -130,7 +130,11 @@ const Home = () => {
           id="projects"
           className="flex items-center justify-center w-full"
         >
-          <DataProfileCard icon={<FaFolder />} title="Proyectos">
+          <DataProfileCard
+            icon={<FaFolder />}
+            title="Proyectos"
+            viewAllLink="/projects"
+          >
             <Carousel />
           </DataProfileCard>
         </section>

@@ -15,6 +15,7 @@ import {
   SiPostman,
   SiTypescript,
 } from "react-icons/si";
+import MaterialUIIcon from "../assets/MaterialUiIcon";
 
 export const technologies = {
   Frontend: ["ReactJS", "Tailwind CSS", "Material UI"],
@@ -27,10 +28,10 @@ export const technologies = {
 export const technologyIcons = {
   ReactJS: <FaReact />,
   "Tailwind CSS": <FaCss3Alt />,
-  "Material UI": <FaJsSquare />, //  
+  "Material UI": <MaterialUIIcon />,
   NestJS: <SiNestjs />,
   Postman: <SiPostman />,
-  TypeScript: <SiTypescript />, //hace que 
+  TypeScript: <SiTypescript />, //hace que
   Jenkins: <SiJenkins />,
   Docker: <FaDocker />,
   Linux: <SiLinux />,
