@@ -10,7 +10,7 @@ import { PublicLayout } from "../layout/PublicLayout";
 import { ExperienceCard, ListProject } from "../components";
 import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
-import { Carousel } from "../components/Carousel"; // Import the new Carousel component
+import { Carousel } from "../components/Carousel"; 
 import { experiences } from "../seed/experiences";
 import { technologies, technologyIcons } from "../seed/tecnologies";
 import { useEffect, useState } from "react";
