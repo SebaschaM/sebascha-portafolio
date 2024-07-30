@@ -1,9 +1,115 @@
+import { useState } from "react";
+import { ModalProjectDetails, ProjectCard } from "../components";
+import { PublicLayout } from "../layout/PublicLayout";
+import { projects } from "../seed/projects";
+import { Project } from "../interfaces/Project";
+import { selectedTechnologies } from "../seed/selectedTechnologies";
+
+interface Technology {
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
 const Projects = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project>({
+    title: "",
+    description: "",
+    imageUrl: "",
+    link: "",
+    technologies: [],
+  });
+  const [selectedTechnologiesState, setSelectedTechnologiesState] = useState<string[]>([]);
+
+  const handleDetailsClick = (title: string, description: string) => {
+    setSelectedProject({
+      title,
+      description,
+      imageUrl: "",
+      link: "",
+      technologies: [],
+    });
+    setIsOpenModal(true);
+  };
+
+  const handleTechnologyClick = (tech: string) => {
+    if (selectedTechnologiesState.includes(tech)) {
+      setSelectedTechnologiesState(
+        selectedTechnologiesState.filter((item) => item !== tech)
+      );
+    } else {
+      setSelectedTechnologiesState([...selectedTechnologiesState, tech]);
+    }
+  };
+
+  const filteredProjects = selectedTechnologiesState.length
+    ? projects.filter((project) =>
+        project.technologies.some((tech) =>
+          selectedTechnologiesState.includes(tech.name)
+        )
+      )
+    : projects;
+
   return (
-    <div>
-      <h1>Projects</h1>
-      <p>Here are some of the projects I have worked on.</p>
-    </div>
+    <PublicLayout>
+      <div className="relative min-h-screen p-10 bg-gray-900">
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="relative z-10">
+          <h1 className="mb-4 text-5xl font-extrabold text-center text-white">
+            Proyectos
+          </h1>
+          <p className="mb-10 text-lg text-center text-gray-300">
+            Una colección de nuestros trabajos más recientes. Haz clic en
+            cualquier proyecto para más detalles.
+          </p>
+          <div className="flex justify-start mb-6 space-x-4">
+            {selectedTechnologies.map((tech: Technology) => (
+              <button
+                key={tech.name}
+                onClick={() => handleTechnologyClick(tech.name)}
+                className={`flex items-center px-4 py-2 border rounded-full shadow-md transition duration-300 ease-in-out transform ${
+                  selectedTechnologiesState.includes(tech.name)
+                    ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600 hover:shadow-lg'
+                    : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 hover:shadow-lg'
+                }`}
+              >
+                <tech.icon className="mr-2" />
+                {tech.name}
+              </button>
+            ))}
+          </div>
+          <div className="grid min-w-full grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-2">
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project: Project, index: number) => (
+                <div
+                  key={index}
+                  className="transition-transform transform hover:scale-105"
+                >
+                  <ProjectCard
+                    title={project.title}
+                    imageUrl={project.imageUrl}
+                    link={project.link}
+                    onDetailsClick={() =>
+                      handleDetailsClick(project.title, project.description)
+                    }
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-1 lg:col-span-2 xl:col-span-2 text-center text-white min-h-[200px] flex items-center justify-center">
+                Proyectos en mantenimiento
+              </div>
+            )}
+          </div>
+          <ModalProjectDetails
+            isOpen={isOpenModal}
+            onClose={() => setIsOpenModal(false)}
+            title={selectedProject.title}
+            description={selectedProject.description}
+          />
+        </div>
+      </div>
+    </PublicLayout>
   );
 };
 

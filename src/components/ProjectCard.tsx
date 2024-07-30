@@ -2,12 +2,11 @@ import { FaEye } from "react-icons/fa";
 
 interface ProjectCardProps {
   title: string;
-  description: string;
   imageUrl: string;
   link: string;
-  detailsLink: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onDetailsClick: () => void;
 }
 
 export const ProjectCard = ({
@@ -16,6 +15,7 @@ export const ProjectCard = ({
   link,
   onMouseEnter,
   onMouseLeave,
+  onDetailsClick,
 }: ProjectCardProps) => {
   return (
     <div
@@ -43,7 +43,7 @@ export const ProjectCard = ({
             Ver
           </a>
           <button
-            //            onClick={onDetailsClick}
+            onClick={onDetailsClick}
             className="flex items-center justify-center px-2 py-1 text-xs font-bold text-white bg-gray-500 rounded sm:px-4 sm:py-2 sm:text-base hover:bg-gray-700"
           >
             Más Detalles

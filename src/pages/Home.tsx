@@ -7,12 +7,16 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { PublicLayout } from "../layout/PublicLayout";
-import { ExperienceCard, ListProject } from "../components";
+import {
+  ExperienceCard,
+  ListProject,
+  ModalProjectDetails,
+} from "../components";
 import { DataProfileCard } from "../components/DataProfileCard";
 import { Typewriter } from "../components/Typewriter";
-import { Carousel } from "../components/Carousel"; 
+import { Carousel } from "../components/Carousel"; // Import the new Carousel component
 import { experiences } from "../seed/experiences";
-import { technologies, technologyIcons } from "../seed/tecnologies";
+import { technologies, technologyIcons } from "../seed/technologies";
 import { useEffect, useState } from "react";
 
 type TechnologyCategory = keyof typeof technologies;
@@ -23,6 +27,11 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState<TechnologyCategory>(
     categories[0]
   );
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState({
+    title: "",
+    description: "",
+  });
 
   const filteredTechnologies = technologies[selectedCategory];
 
@@ -31,6 +40,14 @@ const Home = () => {
     "Practicante Cloud",
     "Entusiasta de la Tecnología",
   ];
+
+  const handleDetailsClick = (
+    title: string,
+    description: string,
+  ) => {
+    setSelectedProject({ title, description });
+    setIsOpenModal(true);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,7 +62,7 @@ const Home = () => {
   }, []);
 
   return (
-    <PublicLayout>
+    <PublicLayout main={true}>
       <div className="relative flex flex-col items-center justify-center flex-1 w-full lg:w-[80%] mx-auto text-white">
         <section id="about" className="flex items-center justify-center w-full">
           <DataProfileCard icon={<></>} title="">
@@ -148,7 +165,11 @@ const Home = () => {
             title="Proyectos"
             viewAllLink="/projects"
           >
-            {windowWidth > 800 ? <Carousel /> : <ListProject />}
+            {windowWidth > 800 ? (
+              <Carousel onDetailsClick={handleDetailsClick} />
+            ) : (
+              <ListProject onDetailsClick={handleDetailsClick} main={true} />
+            )}
           </DataProfileCard>
         </section>
 
@@ -199,6 +220,12 @@ const Home = () => {
             reservados.
           </p>
         </footer>
+        <ModalProjectDetails
+          isOpen={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+          title={selectedProject.title}
+          description={selectedProject.description}
+        />
       </div>
     </PublicLayout>
   );

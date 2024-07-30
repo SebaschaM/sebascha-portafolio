@@ -3,9 +3,10 @@ import { NavBar } from "../components";
 
 interface PublicLayoutProps {
   children: React.ReactNode;
+  main?: boolean;
 }
 
-export const PublicLayout = ({ children }: PublicLayoutProps) => {
+export const PublicLayout = ({ children, main }: PublicLayoutProps) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1200);
   const [theme, setTheme] = useState("dark");
   const [language, setLanguage] = useState("es");
@@ -34,10 +35,10 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
         theme === "dark" ? "bg-[#00030A]" : "bg-white"
       }`}
     >
-      <NavBar isMobile={isMobile} />
+      {main && <NavBar isMobile={isMobile} />}
       <div
         className={`flex-1 w-full flex flex-col items-center justify-center px-6 sm:px-10 py-6 sm:py-12 ${
-          isMobile ? "mb-16" : "max-w-6xl"
+          isMobile ? "mb-16" : main ? "max-w-6xl" : ""
         }`}
       >
         <div className="hidden mb-6 space-x-4">

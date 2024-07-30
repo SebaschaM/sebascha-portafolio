@@ -1,11 +1,4 @@
-import {
-  FaReact,
-  FaCss3Alt,
-  FaJsSquare,
-  FaDocker,
-  FaGithub,
-  FaGit,
-} from "react-icons/fa";
+import { FaReact, FaCss3Alt, FaDocker, FaGithub, FaGit } from "react-icons/fa";
 import {
   SiPostgresql,
   SiMicrosoftsqlserver,

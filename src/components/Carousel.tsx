@@ -2,8 +2,19 @@ import { useState, useEffect } from "react";
 import { ProjectCard } from "./ProjectCard";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { projects } from "../seed/projects";
+import { Technologies } from "../interfaces/Project";
 
-export const Carousel = () => {
+interface CarouselProps {
+  onDetailsClick: (
+    title: string,
+    description: string,
+    technologies: Technologies[],
+    link: string,
+    imageUrl: string
+  ) => void;
+}
+
+export const Carousel = ({ onDetailsClick }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -62,17 +73,25 @@ export const Carousel = () => {
             >
               <ProjectCard
                 title={project.title}
-                description={project.description}
                 imageUrl={project.imageUrl}
                 link={project.link}
-                detailsLink={project.detailsLink}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                onDetailsClick={() =>
+                  onDetailsClick(
+                    project.title,
+                    project.description,
+                    project.technologies,
+                    project.link,
+                    project.imageUrl
+                  )
+                }
               />
             </div>
           ))}
         </div>
       </div>
+
       <div className="absolute z-30 flex space-x-2 -translate-x-1/2 bottom-4 left-1/2 rtl:space-x-reverse">
         {featuredProjects.map((_, index) => (
           <button
@@ -97,6 +116,7 @@ export const Carousel = () => {
           <span className="sr-only">Previous</span>
         </span>
       </button>
+
       <button
         type="button"
         className="absolute z-30 flex items-center justify-center p-2 -translate-y-1/2 rounded-full cursor-pointer top-1/2 right-2 bg-white/30 group focus:outline-none"

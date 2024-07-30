@@ -1,58 +1,81 @@
-interface Project {
-  title: string;
-  description: string;
-  imageUrl: string;
-  link: string;
-  detailsLink: string;
-}
+import { useState, useEffect } from 'react';
 
 interface ModalProjectDetailsProps {
-  project: Project | null;
+  isOpen: boolean;
   onClose: () => void;
+  title: string;
+  description: string;
 }
 
 export const ModalProjectDetails = ({
-  project,
+  isOpen,
   onClose,
+  title,
+  description,
 }: ModalProjectDetailsProps) => {
-  if (!project) return null;
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsClosing(false);
+    }
+  }, [isOpen]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 300); // Duration should match the closing animation duration
+  };
+
+  if (!isOpen && !isClosing) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-      <div className="relative w-auto max-w-3xl mx-auto my-6">
-        {/*content*/}
-        <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
-          {/*header*/}
-          <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200">
-            <h3 className="text-2xl font-semibold">{project.title}</h3>
-            <button
-              className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black border-0 outline-none focus:outline-none"
-              onClick={onClose}
-            >
-              <span className="block w-6 h-6 text-2xl text-black bg-transparent outline-none focus:outline-none">
-                ×
-              </span>
-            </button>
-          </div>
-          {/*body*/}
-          <div className="relative flex-auto p-6">
-            <p className="my-4 text-lg leading-relaxed text-slate-500">
-              {project.description}
-            </p>
-          </div>
-          {/*footer*/}
-          <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200">
-            <button
-              className="px-6 py-2 mb-1 mr-1 text-sm font-bold text-red-500 uppercase transition-all duration-150 ease-linear bg-transparent outline-none focus:outline-none"
-              type="button"
-              onClick={onClose}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${
+        isClosing ? 'opacity-0' : 'opacity-100'
+      }`}
+    >
+      <div
+        className={`relative w-11/12 max-w-md p-6 transform bg-white rounded-lg shadow-lg transition-all duration-300 ease-in-out ${
+          isClosing ? 'fade-out' : 'fade-in'
+        }`}
+      >
+        <button
+          title="Close Modal"
+          onClick={handleClose}
+          className="absolute text-gray-500 top-3 right-3 hover:text-gray-700"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <h2 className="mb-4 text-2xl font-bold text-center text-gray-800">
+          {title}
+        </h2>
+        <p className="mb-4 text-gray-600">{description}</p>
+        <a className="block mb-4 text-center text-blue-500 hover:underline">
+          Learn more
+        </a>
+        <button
+          onClick={handleClose}
+          className="w-full px-4 py-2 text-white bg-gray-700 rounded hover:bg-gray-600"
+        >
+          Close
+        </button>
       </div>
-      <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
     </div>
   );
 };

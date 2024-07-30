@@ -21,7 +21,6 @@ import {
   SiAmazonaws,
 } from "react-icons/si";
 import { MdOutlineTask } from "react-icons/md";
-import { experiences } from "../seed/experiences";
 
 interface ExperienceCardProps {
   company: string;
