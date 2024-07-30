@@ -4,10 +4,14 @@ import { PublicLayout } from "../layout/PublicLayout";
 import { projects } from "../seed/projects";
 import { Project } from "../interfaces/Project";
 import { selectedTechnologies } from "../seed/selectedTechnologies";
+import { FiAlertCircle } from "react-icons/fi"; // Importar ícono de alerta
 
 interface Technology {
   name: string;
-  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  icon: React.ComponentType<{
+    className?: string;
+    style?: React.CSSProperties;
+  }>;
   color: string;
 }
 
@@ -20,7 +24,9 @@ const Projects = () => {
     link: "",
     technologies: [],
   });
-  const [selectedTechnologiesState, setSelectedTechnologiesState] = useState<string[]>([]);
+  const [selectedTechnologiesState, setSelectedTechnologiesState] = useState<
+    string[]
+  >([]);
 
   const handleDetailsClick = (title: string, description: string) => {
     setSelectedProject({
@@ -55,7 +61,7 @@ const Projects = () => {
     <PublicLayout>
       <div className="relative min-h-screen p-4 bg-gray-900 md:p-10">
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative z-10">
+        <div className="relative z-10 w-full lg:w-[60rem] mx-auto">
           <h1 className="mb-4 text-3xl font-extrabold text-center text-white md:text-5xl">
             Proyectos
           </h1>
@@ -100,8 +106,12 @@ const Projects = () => {
                 </div>
               ))
             ) : (
-              <div className="col-span-full text-center text-white min-h-[200px] flex items-center justify-center">
-                Proyectos en mantenimiento
+              <div className="col-span-full text-center text-white min-h-[200px] flex flex-col items-center justify-center space-y-4">
+                <FiAlertCircle className="text-4xl text-yellow-500" />
+                <p className="text-lg">
+                  No hay proyectos disponibles en este momento. ¡Por favor,
+                  vuelve más tarde!
+                </p>
               </div>
             )}
           </div>
