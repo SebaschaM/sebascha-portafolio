@@ -41,10 +41,7 @@ const Home = () => {
     "Entusiasta de la Tecnología",
   ];
 
-  const handleDetailsClick = (
-    title: string,
-    description: string,
-  ) => {
+  const handleDetailsClick = (title: string, description: string) => {
     setSelectedProject({ title, description });
     setIsOpenModal(true);
   };
@@ -83,7 +80,7 @@ const Home = () => {
                 </div>
                 <div className="flex flex-col items-center w-full space-y-2 md:space-y-0 md:flex-row md:space-x-4">
                   <a
-                    href="/ruta-al-cv.pdf"
+                    href="/Sebastian_Chaquila_Muñoz_CV.pdf"
                     download
                     className="w-full md:w-auto"
                   >

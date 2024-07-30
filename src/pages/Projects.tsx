@@ -7,7 +7,8 @@ import { selectedTechnologies } from "../seed/selectedTechnologies";
 
 interface Technology {
   name: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  color: string;
 }
 
 const Projects = () => {
@@ -52,33 +53,36 @@ const Projects = () => {
 
   return (
     <PublicLayout>
-      <div className="relative min-h-screen p-10 bg-gray-900">
+      <div className="relative min-h-screen p-4 bg-gray-900 md:p-10">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10">
-          <h1 className="mb-4 text-5xl font-extrabold text-center text-white">
+          <h1 className="mb-4 text-3xl font-extrabold text-center text-white md:text-5xl">
             Proyectos
           </h1>
-          <p className="mb-10 text-lg text-center text-gray-300">
+          <p className="mb-6 text-sm text-center text-gray-300 md:text-lg">
             Una colección de nuestros trabajos más recientes. Haz clic en
             cualquier proyecto para más detalles.
           </p>
-          <div className="flex justify-start mb-6 space-x-4">
+          <div className="flex flex-wrap justify-center mb-6 space-x-2 md:space-x-4">
             {selectedTechnologies.map((tech: Technology) => (
               <button
                 key={tech.name}
                 onClick={() => handleTechnologyClick(tech.name)}
-                className={`flex items-center px-4 py-2 border rounded-full shadow-md transition duration-300 ease-in-out transform ${
+                className={`flex items-center mb-4 px-2 md:px-4 py-1 md:py-2 border rounded-full shadow-md transition duration-300 ease-in-out transform ${
                   selectedTechnologiesState.includes(tech.name)
-                    ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600 hover:shadow-lg'
-                    : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 hover:shadow-lg'
+                    ? "bg-blue-500 text-white border-blue-500 hover:bg-blue-600 hover:shadow-lg"
+                    : "bg-white text-gray-800 border-gray-300 hover:bg-gray-100 hover:shadow-lg"
                 }`}
               >
-                <tech.icon className="mr-2" />
-                {tech.name}
+                <tech.icon
+                  className="mr-1 text-lg md:mr-2 md:text-xl"
+                  style={{ color: tech.color }}
+                />
+                <span className="text-sm md:text-base">{tech.name}</span>
               </button>
             ))}
           </div>
-          <div className="grid min-w-full grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-2">
+          <div className="grid w-full max-w-screen-xl grid-cols-1 gap-6 mx-auto md:gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
             {filteredProjects.length > 0 ? (
               filteredProjects.map((project: Project, index: number) => (
                 <div
@@ -96,7 +100,7 @@ const Projects = () => {
                 </div>
               ))
             ) : (
-              <div className="col-span-1 lg:col-span-2 xl:col-span-2 text-center text-white min-h-[200px] flex items-center justify-center">
+              <div className="col-span-full text-center text-white min-h-[200px] flex items-center justify-center">
                 Proyectos en mantenimiento
               </div>
             )}

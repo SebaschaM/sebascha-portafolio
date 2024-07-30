@@ -15,6 +15,7 @@
   font-family: "Lato", sans-serif;
 }
 
+/* MODAL EFFECTS */
 @layer utilities {
   @keyframes fadeIn {
     0% {
@@ -47,6 +48,7 @@
   }
 }
 
+/* PHOTO-EFFECTS */
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.1),
@@ -78,10 +80,12 @@
   }
 }
 
+/*FOOTER WITH COLOR CONTRAST*/
 .bg-with-glow {
   background-color: var(--color-contraste);
 }
 
+/*EFFET TYPING*/
 @keyframes typing {
   from {
     width: 0;
@@ -98,7 +102,7 @@
 }
 
 .typewriter-container {
-  min-height: 3rem; /* Ajusta esto según la altura de la palabra más larga */
+  min-height: 3rem;
 }
 
 .typewriter h2 {
@@ -109,21 +113,7 @@
   display: inline-block;
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  50% {
-    border-color: transparent;
-  }
-}
-
+/*CAROUSEL*/
 [data-carousel-item] {
   display: none;
 }
@@ -131,10 +121,7 @@
   display: block;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 1s ease-out;
-}
-
+/*SCROLLBAR*/
 ::-webkit-scrollbar {
   width: 12px;
 }
