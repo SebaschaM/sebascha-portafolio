@@ -62,8 +62,8 @@ const Projects = () => {
       <div className="relative min-h-screen p-4 bg-gray-900 md:p-10">
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 w-full lg:w-[60rem] mx-auto">
-          <h1 className="mb-4 text-3xl font-extrabold text-center text-white md:text-5xl">
-            Proyectos
+          <h1 className="mt-2 mb-4 text-2xl font-extrabold text-center text-white md:xl">
+            Mis proyectos
           </h1>
           <p className="mb-6 text-sm text-center text-gray-300 md:text-lg">
             Una colección de nuestros trabajos más recientes. Haz clic en

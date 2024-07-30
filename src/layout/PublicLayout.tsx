@@ -38,7 +38,7 @@ export const PublicLayout = ({ children, main }: PublicLayoutProps) => {
       {main && <NavBar isMobile={isMobile} />}
       <div
         className={`flex-1 w-full flex flex-col items-center justify-center px-6 sm:px-10 py-6 sm:py-12 ${
-          isMobile ? "mb-16" : main ? "max-w-6xl" : "max-w-5xl"
+          isMobile ? "mb-16" : main ? "max-w-6xl" : "max-w-5xl mb-0"
         }`}
       >
         <div className="hidden mb-6 space-x-4">
